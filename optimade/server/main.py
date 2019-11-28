@@ -1,25 +1,14 @@
 import json
-from typing import Union
 from pathlib import Path
 
 from pydantic import ValidationError
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI
 from fastapi.exceptions import RequestValidationError
 from starlette.exceptions import HTTPException as StarletteHTTPException
-from starlette.requests import Request
 
-from optimade.models import (
-    LinksResource,
-    LinksResponse,
-    ErrorResponse,
-)
-
-from .entry_collections import MongoCollection, client
 from .config import CONFIG
-from .deps import EntryListingQueryParams
-from .mappers import LinksMapper
-from .routers.utils import get_entries
-from .routers import info, references, structures
+from .entry_collections import MongoCollection
+from .routers import info, links, references, structures
 from .utils import get_providers
 
 import optimade.server.exception_handlers as exc_handlers
@@ -37,8 +26,6 @@ app = FastAPI(
     redoc_url="/extensions/redoc",
     openapi_url="/extensions/openapi.json",
 )
-
-links = MongoCollection(client[CONFIG.mongo_database]["links"], LinksResource, LinksMapper)
 
 
 test_paths = {
@@ -75,29 +62,6 @@ if not CONFIG.use_real_mongo and (path.exists() for path in test_paths.values())
         load_entries(name, collection)
 
 
-@app.get(
-    "/links",
-    response_model=Union[LinksResponse, ErrorResponse],
-    response_model_skip_defaults=True,
-    tags=["Links"],
-)
-def get_links(request: Request, params: EntryListingQueryParams = Depends()):
-    for str_param in ["filter", "sort"]:
-        if getattr(params, str_param):
-            setattr(params, str_param, "")
-    for int_param in [
-        "page_offset",
-        "page_page",
-        "page_cursor",
-        "page_above",
-        "page_below",
-    ]:
-        if getattr(params, int_param):
-            setattr(params, int_param, 0)
-    params.page_limit = CONFIG.page_limit
-    return get_entries(links, LinksResponse, request, params)
-
-
 app.add_exception_handler(StarletteHTTPException, exc_handlers.http_exception_handler)
 app.add_exception_handler(
     RequestValidationError, exc_handlers.request_validation_exception_handler
@@ -122,6 +86,7 @@ while version:
 
 for prefix in valid_prefixes:
     app.include_router(info.router, prefix=prefix)
+    app.include_router(links.router, prefix=prefix)
     app.include_router(references.router, prefix=prefix)
     app.include_router(structures.router, prefix=prefix)
 
