@@ -1,12 +1,23 @@
 [
   {
-    "_id": {
-      "$oid": "746573745f73657276657263"
-    },
-    "task_id": "test_server",
     "type": "child",
-    "name": "OPTiMaDe API",
-    "description": "The [Open Databases Integration for Materials Design (OPTiMaDe) consortium](http://http://www.optimade.org/) aims to make materials databases interoperational by developing a common REST API.",
-    "base_url": "http://localhost:5000/optimade"
+    "task_id": "3dd",
+    "name": "Three-dimensional crystals database",
+    "description": "Curated set of relaxed three-dimensional crystal structures based on raw CIF data from the experimantal databases MPDS, COD, and ICSD.",
+    "base_url": "https://dev-aiida-dev.materialscloud.org/3dd/optimade"
+  },
+  {
+    "type": "child",
+    "task_id": "scdm",
+    "name": "Automatic Wannier",
+    "description": "Automatic Wannier",
+    "base_url": "https://dev-aiida-dev.materialscloud.org/autowannier/optimade"
+  },
+  {
+    "type": "child",
+    "task_id": "optimade-sample",
+    "name": "OPTiMaDe Sample Database",
+    "description": "Sample database for OPTiMaDe tests",
+    "base_url": "https://dev-aiida-dev.materialscloud.org/optimade-sample/optimade"
   }
 ]
