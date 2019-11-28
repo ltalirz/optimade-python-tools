@@ -55,12 +55,12 @@ app.add_exception_handler(Exception, exc_handlers.general_exception_handler)
 #   /optimade/vMajor (but only if Major >= 1)
 #   /optimade/vMajor.Minor
 #   /optimade/vMajor.Minor.Patch
-valid_prefixes = ["/index/optimade"]
+valid_prefixes = ["/optimade"]
 version = [int(_) for _ in app.version.split(".")]
 while version:
     if version[0] or len(version) >= 2:
         valid_prefixes.append(
-            "/index/optimade/v{}".format(".".join([str(_) for _ in version]))
+            "/optimade/v{}".format(".".join([str(_) for _ in version]))
         )
     version.pop(-1)
 
