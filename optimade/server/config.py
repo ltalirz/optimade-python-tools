@@ -35,6 +35,8 @@ class ServerConfig(Config):
 
     use_real_mongo = False
     mongo_database = "optimade"
+    default_db = "test_server"
+    page_limit = 500
     provider = {
         "prefix": "_exmpl_",
         "name": "Example provider",
@@ -42,7 +44,6 @@ class ServerConfig(Config):
         "homepage": "http://example.com",
         "index_base_url": "http://example.com/optimade/index",
     }
-    page_limit = 500
     provider_fields: Dict[str, Set] = {}
     _path = Path(__file__).resolve().parent
 
@@ -55,11 +56,12 @@ class ServerConfig(Config):
         self.use_real_mongo = config.getboolean(
             "DEFAULT", "USE_REAL_MONGO", fallback=self.use_real_mongo
         )
-        self.page_limit = config.getint(
-            "DEFAULT", "PAGE_LIMIT", fallback=self.page_limit
-        )
         self.mongo_database = config.get(
             "DEFAULT", "MONGO_DATABASE", fallback=self.mongo_database
+        )
+        self.default_db = config.get("DEFAULT", "DEFAULT_DB", fallback=self.default_db)
+        self.page_limit = config.getint(
+            "DEFAULT", "PAGE_LIMIT", fallback=self.page_limit
         )
         if "PROVIDER" in config.sections():
             self.provider = dict(config["PROVIDER"])
@@ -79,8 +81,9 @@ class ServerConfig(Config):
             config = json.load(f)
 
         self.use_real_mongo = bool(config.get("use_real_mongo", self.use_real_mongo))
-        self.page_limit = int(config.get("page_limit", self.page_limit))
         self.mongo_database = config.get("mongo_database", self.mongo_database)
+        self.default_db = config.get("default_db", self.default_db)
+        self.page_limit = int(config.get("page_limit", self.page_limit))
         self.provider = config.get("provider", self.provider)
         self.provider_fields = set(config.get("provider_fields", self.provider_fields))
 
