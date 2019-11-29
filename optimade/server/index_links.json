@@ -1,23 +1,23 @@
 [
   {
     "type": "child",
-    "task_id": "3dd",
-    "name": "Three-dimensional crystals database",
-    "description": "Curated set of relaxed three-dimensional crystal structures based on raw CIF data from the experimantal databases MPDS, COD, and ICSD.",
-    "base_url": "https://dev-aiida-dev.materialscloud.org/3dd/optimade"
+    "task_id": "autowannier",
+    "name": "Automated high-throughput Wannierisation",
+    "description": "Validation results of an automated protocol for generating maximally-localized Wannier functions in a high-throughput framework.",
+    "base_url": "https://dev-aiida-dev.materialscloud.org/autowannier/optimade"
   },
   {
     "type": "child",
-    "task_id": "scdm",
-    "name": "Automatic Wannier",
-    "description": "Automatic Wannier",
-    "base_url": "https://dev-aiida-dev.materialscloud.org/autowannier/optimade"
+    "task_id": "curated-cofs",
+    "name": "CURATED covalent organic frameworks database",
+    "description": "Database of experimentally reported Covalent-Organic Frameworks (COFs), provided with DFT-optimized geometry and DDEC partial charges for molecular simulations.",
+    "base_url": "https://dev-aiida-dev.materialscloud.org/curated-cofs/optimade"
   },
   {
     "type": "child",
     "task_id": "optimade-sample",
     "name": "OPTiMaDe Sample Database",
-    "description": "Sample database for OPTiMaDe tests",
+    "description": "Database with example structures for OPTiMaDe tests.",
     "base_url": "https://dev-aiida-dev.materialscloud.org/optimade-sample/optimade"
   }
 ]
