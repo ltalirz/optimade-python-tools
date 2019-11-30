@@ -115,13 +115,17 @@ from lark.tree import pydot__tree_to_png
 
 pydot__tree_to_png(tree, "exampletree.png")
 ```
-![example tree](exampletree.png)
+![example tree](static/exampletree.png)
 
 #### Flow for Parsing User-Supplied Filter and Converting to Backend Query
 
-`optimade.filterparser.Parser` will take user input to generate a `lark.Tree` and feed that to a `lark.Transformer`
-(for example, `optimade.filtertransformers.mongo.MongoTransformer`), which will turn that tree into something useful
+The general approach for converting a user-supplied filter into a backend query is depicted below:
+![general approach](static/optimade_general_procedure.jpg)
+
+Specifically, the `optimade.filterparser.Parser` takes user input to generate a `lark.Tree` and feeds that to a `lark.Transformer`
+(for example, `optimade.filtertransformers.mongo.MongoTransformer`), which turns that tree into something useful
 to your backend (for example, a MongoDB query `dict`.)
+![mongodb example](static/optimade_to_mongodb_procedure.jpg)
 
 ```python
 # Example: Converting to MongoDB Query Syntax
